@@ -1,0 +1,30 @@
+.grid {
+  border: solid 1px #e7e7e7;
+}
+
+.grid__row {
+  display: flex;
+}
+
+.grid__item {
+  flex: 1;
+  padding: 12px;
+  margin: 2px;
+  border: solid 1px #474747;
+
+  max-width: 60px;
+  max-height: 60px;
+}
+
+.character {
+  position:relative;
+  left: 50px;
+  top: 60px;
+  z-index: 100;
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  background: red;
+}
