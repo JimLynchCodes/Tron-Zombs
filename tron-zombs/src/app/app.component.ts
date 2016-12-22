@@ -41,6 +41,7 @@ export class AppComponent {
       .subscribe( (data) => {
         console.log('got data from da lamb: ' + data);
       })
+      
 
 
 
