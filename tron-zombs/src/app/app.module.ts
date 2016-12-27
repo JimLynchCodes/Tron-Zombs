@@ -7,6 +7,15 @@ import 'rxjs/add/operator/toPromise';
 // import 'rxjs/Rx'; this will load all features
 
 import { AppComponent } from './app.component';
+import {StoreModule} from "@ngrx/store";
+import {reducerOne} from "./state-management/reducers/reducer-one";
+import {reducerTwo} from "./state-management/reducers/reducer-two";
+import {reducers} from "./state-management/state/state";
+import {myReducer} from "./state-management/reducers/my-reducer";
+import {AngularFireModule} from "angularfire2";
+import {FirebaseConf} from "./.firebase-conf";
+
+export const firebaseConfig = FirebaseConf.config;
 
 @NgModule({
   declarations: [
@@ -14,10 +23,13 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(firebaseConfig),
     FormsModule,
-    HttpModule
+    HttpModule,
+    StoreModule.provideStore({myReducer}),
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

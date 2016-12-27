@@ -3,6 +3,10 @@ import { Http , Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import { Headers, RequestOptions } from '@angular/http';
 import {updateNotifierCheck} from "tslint/lib/updateNotifier";
+import {AppState, GlobalState} from "./state-management/state/state";
+import {Store, ActionReducer} from "@ngrx/store";
+import {INCREMENT} from "./state-management/actions/action-creator";
+import {AngularFire} from "angularfire2";
 
 @Component({
   selector: 'app-root',
@@ -22,11 +26,29 @@ export class AppComponent {
   private guysDirection;
 
 
-  constructor(private http:Http) {
+  constructor(private http:Http, private store:Store<GlobalState>,
+    private af:AngularFire) {
 
   }
 
   ngOnInit() {
+
+
+    this.store.select(s => s.myReducer.user)
+      .subscribe( (data:any)=> {
+        console.log('app component got reducer one\'s state: ' + data);
+      });
+
+
+
+    // this.store.dispatch({type:INCREMENT});
+
+    this.af.database.object('/cypherapp/').update({"gg":"gg"}).then( () => {
+
+      console.log('ok');
+
+    })
+
     (<any>document.getElementById("character")).style.left = this.guysLeft + 'vw';
     (<any>document.getElementById("character")).style.top = this.guysTop + 'vw';
 
@@ -46,7 +68,7 @@ export class AppComponent {
     if (prevent) event.preventDefault();
 
 
-    // console.log('key pressed down ' + event.keyCode);
+    console.log('key pressed down ' + event.keyCode);
 
 
     // ====================================
@@ -79,6 +101,12 @@ export class AppComponent {
         console.log('right pressed');
         (<any>document.getElementById("character")).style.rotation = "90deg";
         break;
+      }
+
+      case '32': {
+        console.log('space pressed, calling to firebase!');
+        this.store.dispatch({type:"FIRE_BULLET"})
+
       }
 
 
